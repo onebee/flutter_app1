@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(MyApp2());
 
 class MyApp extends StatelessWidget {
   @override
@@ -20,52 +20,84 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class SimpleGridView extends StatelessWidget{
+class MyApp2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Scaffold(appBar: AppBar(title: Text("SimpleGridView"),),body: GridView(
-      children: <Widget>[
-        Container(
-          color: Colors.green,
-        ),
-        Container(
-          color: Colors.yellow,
-        ),  Container(
-          color: Colors.green,
-        ),
-        Container(
-          color: Colors.yellow,
-        ),  Container(
-          color: Colors.green,
-        ),
-        Container(
-          color: Colors.yellow,
-        ),  Container(
-          color: Colors.green,
-        ),
-        Container(
-          color: Colors.yellow,
-        ),  Container(
-          color: Colors.green,
-        ),
-        Container(
-          color: Colors.yellow,
-        ), Container(
-          color: Colors.green,
-        ),
-        Container(
-          color: Colors.yellow,
-        ),
-      ],
-gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-  crossAxisCount: 3,
-  childAspectRatio: 1.0
-),
-
-    ),);
+    return MaterialApp(
+      title: 'Flutter Sample',
+      theme: ThemeData(
+        primaryColor: Colors.brown,
+      ),
+      routes: {
+        '/': (context) => FirstRoute(),
+        '/second_route': (context) => SecondRoute(),
+        '/second_route3': (context) => SecondRoute3(),
+        '/second_route4':(context)=> SecondRoute4('Arg HELLO'),
+      },
+      onGenerateRoute: (settings){
+        if(settings.name == '/second_route4') {
+          var arg = settings.arguments;
+          return MaterialPageRoute(builder: (context)=> SecondRoute4(arg),settings:settings);
+        }
+      },
+      initialRoute: '/',
+    );
   }
+}
 
+class SimpleGridView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("SimpleGridView"),
+      ),
+      body: GridView(
+        children: <Widget>[
+          Container(
+            color: Colors.green,
+          ),
+          Container(
+            color: Colors.yellow,
+          ),
+          Container(
+            color: Colors.green,
+          ),
+          Container(
+            color: Colors.yellow,
+          ),
+          Container(
+            color: Colors.green,
+          ),
+          Container(
+            color: Colors.yellow,
+          ),
+          Container(
+            color: Colors.green,
+          ),
+          Container(
+            color: Colors.yellow,
+          ),
+          Container(
+            color: Colors.green,
+          ),
+          Container(
+            color: Colors.yellow,
+          ),
+          Container(
+            color: Colors.green,
+          ),
+          Container(
+            color: Colors.yellow,
+          ),
+        ],
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3, childAspectRatio: 1.0),
+      ),
+    );
+  }
 }
 
 class SimpleListView4 extends StatefulWidget {
@@ -100,16 +132,17 @@ class _SimpleListView4State extends State<SimpleListView4> {
       body: ListView.separated(
           itemBuilder: (BuildContext context, int index) {
             if (index == _words.length - 1) {
-              if(_words.length-1<100) {
+              if (_words.length - 1 < 100) {
                 _loadWords();
                 return Container(
                   padding: EdgeInsets.all(20),
                   alignment: Alignment.center,
                   child: CircularProgressIndicator(),
                 );
-              }else{
-                return Container(padding: EdgeInsets.all(20),
-                alignment: Alignment.center,
+              } else {
+                return Container(
+                  padding: EdgeInsets.all(20),
+                  alignment: Alignment.center,
                   child: Text("没有更多了"),
                 );
               }
@@ -120,8 +153,9 @@ class _SimpleListView4State extends State<SimpleListView4> {
                 child: CircularProgressIndicator(),
               );
             }
-            return ListTile(title: Text(_words[index]),);
-
+            return ListTile(
+              title: Text(_words[index]),
+            );
           },
           separatorBuilder: (BuildContext context, int index) {
             return Divider(
