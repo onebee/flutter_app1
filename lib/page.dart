@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'animate.dart';
+
 class FirstRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -13,18 +15,31 @@ class FirstRoute extends StatelessWidget {
       body: Center(
         child: RaisedButton(
           child: Text("Open Route"),
-          onPressed: () async {
+          onPressed: ()  {
 //            var result = await Navigator.push(
 //                context,
 //                MaterialPageRoute(
 //                    builder: (context) =>
-//                        SecondRoute2('arg from first route ')));
+//                        SecondRoute2 ('arg from first route ')));
 //
 //            print(result);
-            var result = await Navigator.pushNamed(context, '/second_route4',
-                arguments: 'Arg from first Route');
+//            var result = await Navigator.pushNamed(context, '/second_route4',
+//                arguments: 'Arg from first Route');
+//
+//            print(result);
 
-            print(result);
+            Navigator.push(
+                context,
+                PageRouteBuilder(
+                    transitionDuration: Duration(milliseconds: 800),
+                    pageBuilder: (BuildContext context,
+                        Animation<double> animation,
+                        Animation<double> secondaryAnimation) {
+                      return FadeTransition(
+                        opacity: animation,
+                        child: SecondRoute5(),
+                      );
+                    }));
           },
         ),
       ),
@@ -84,7 +99,10 @@ class SecondRoute3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // 获取参数
-    var arguments2 = ModalRoute.of(context).settings.arguments;
+    var arguments2 = ModalRoute
+        .of(context)
+        .settings
+        .arguments;
     return Scaffold(
       appBar: AppBar(
         title: Text('second Route3'),
@@ -125,14 +143,13 @@ class SecondRoute4 extends StatelessWidget {
             RaisedButton(
 
               child: Text('Go Back'),
-              onPressed: (){
-                Navigator.pop(context,'Result form second route4');
-
+              onPressed: () {
+                Navigator.pop(context, 'Result form second route4');
               },
             )
           ],
         ),
 
-    ),);
+      ),);
   }
 }
